@@ -16,7 +16,8 @@ function MovieCard({ movie }: MovieCardProps) {
   const navigate = useNavigate();
 
   const favorited = isFavorite(movie.id);
-  const showImage = movie.poster && !posterError;
+  const posterUrl = movie.poster || undefined;
+  const showImage = Boolean(posterUrl && !posterError);
 
   const handleFavoriteClick = async (e: MouseEvent) => {
     e.preventDefault();
@@ -41,9 +42,9 @@ function MovieCard({ movie }: MovieCardProps) {
 
       <Link to={`/movie/${movie.id}`} className="movie-card-link">
         <div className="movie-poster-wrapper">
-          {showImage ? (
+          {showImage && posterUrl ? (
             <img
-              src={movie.poster!}
+              src={posterUrl}
               alt={`${movie.title} poster`}
               className="movie-poster"
               loading="lazy"

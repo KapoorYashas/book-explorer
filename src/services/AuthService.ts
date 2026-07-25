@@ -1,7 +1,7 @@
 /**
  * AuthService.ts
- * Data/Service layer handling Firebase Authentication calls
- * and error code translation for user-friendly error messages.
+ * Data/Service layer handling Firebase Authentication calls,
+ * type-safe error parsing, and domain model mapping.
  */
 import {
   createUserWithEmailAndPassword,
@@ -12,6 +12,23 @@ import {
 } from 'firebase/auth';
 import { auth } from './firebase';
 import type { User } from '../models/User';
+
+interface FirebaseLikeError {
+  code: string;
+  message?: string;
+}
+
+/**
+ * Type guard validating whether an unknown thrown error is a Firebase-like error object.
+ */
+function isFirebaseLikeError(error: unknown): error is FirebaseLikeError {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    typeof (error as Record<string, unknown>).code === 'string'
+  );
+}
 
 function mapFirebaseUser(firebaseUser: FirebaseUser | null): User | null {
   if (!firebaseUser) return null;
@@ -28,7 +45,11 @@ export const AuthService = {
    */
   async register(email: string, pass: string): Promise<User> {
     const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-    return mapFirebaseUser(userCredential.user)!;
+    const mappedUser = mapFirebaseUser(userCredential.user);
+    if (!mappedUser) {
+      throw new Error('Registration failed to yield a valid user.');
+    }
+    return mappedUser;
   },
 
   /**
@@ -36,7 +57,11 @@ export const AuthService = {
    */
   async login(email: string, pass: string): Promise<User> {
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-    return mapFirebaseUser(userCredential.user)!;
+    const mappedUser = mapFirebaseUser(userCredential.user);
+    if (!mappedUser) {
+      throw new Error('Login failed to yield a valid user.');
+    }
+    return mappedUser;
   },
 
   /**
@@ -57,12 +82,12 @@ export const AuthService = {
   },
 
   /**
-   * Translates raw Firebase auth error objects / codes into user-friendly error messages.
+   * Translates raw Firebase auth error objects / codes into user-friendly error messages
+   * using a type-safe error guard without unsafe type assertions.
    */
   formatAuthError(error: unknown): string {
-    if (typeof error === 'object' && error !== null && 'code' in error) {
-      const code = (error as { code: string }).code;
-      switch (code) {
+    if (isFirebaseLikeError(error)) {
+      switch (error.code) {
         case 'auth/email-already-in-use':
           return 'An account with this email address already exists.';
         case 'auth/invalid-email':
@@ -80,7 +105,7 @@ export const AuthService = {
         case 'auth/user-disabled':
           return 'This account has been disabled.';
         default:
-          return (error as { message?: string }).message || 'Authentication failed. Please try again.';
+          return error.message || 'Authentication failed. Please try again.';
       }
     }
 
@@ -91,4 +116,3 @@ export const AuthService = {
     return 'An unexpected error occurred. Please try again.';
   },
 };
-

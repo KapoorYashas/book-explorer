@@ -12,7 +12,8 @@ export default function MovieDetailsPage() {
 
   // Poster fallback — same pattern as MovieCard
   const [posterError, setPosterError] = useState(false);
-  const showImage = movie?.poster && !posterError;
+  const posterUrl = movie?.poster || undefined;
+  const showImage = Boolean(posterUrl && !posterError);
   const favorited = movie ? isFavorite(movie.id) : false;
 
   const handleFavToggle = async () => {
@@ -44,9 +45,9 @@ export default function MovieDetailsPage() {
           <div className="details-layout">
             {/* Poster column */}
             <div className="details-poster-wrapper">
-              {showImage ? (
+              {showImage && posterUrl ? (
                 <img
-                  src={movie.poster!}
+                  src={posterUrl}
                   alt={`${movie.title} poster`}
                   className="details-poster"
                   onError={() => setPosterError(true)}
