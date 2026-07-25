@@ -1,4 +1,4 @@
-import { useState, type MouseEvent } from 'react';
+import { useState, memo, type MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { ImageOff, Heart } from 'lucide-react';
 import type { Movie } from '../../models';
@@ -8,7 +8,7 @@ interface MovieCardProps {
   movie: Movie;
 }
 
-export default function MovieCard({ movie }: MovieCardProps) {
+function MovieCard({ movie }: MovieCardProps) {
   // Track whether the remote poster image failed to load.
   // Starts false; flips to true on the img onError event.
   const [posterError, setPosterError] = useState(false);
@@ -25,18 +25,18 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <div className="movie-card">
+      <button
+        type="button"
+        className={`favorite-card-btn ${favorited ? 'active' : ''}`}
+        onClick={handleFavoriteClick}
+        aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+        title={favorited ? 'Remove from favorites' : 'Add to favorites'}
+      >
+        <Heart className="favorite-card-icon" fill={favorited ? 'currentColor' : 'none'} aria-hidden="true" />
+      </button>
+
       <Link to={`/movie/${movie.id}`} className="movie-card-link">
         <div className="movie-poster-wrapper">
-          <button
-            type="button"
-            className={`favorite-card-btn ${favorited ? 'active' : ''}`}
-            onClick={handleFavoriteClick}
-            aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
-            title={favorited ? 'Remove from favorites' : 'Add to favorites'}
-          >
-            <Heart className="favorite-card-icon" fill={favorited ? 'currentColor' : 'none'} />
-          </button>
-
           {showImage ? (
             <img
               src={movie.poster!}
@@ -47,7 +47,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             />
           ) : (
             <div className="movie-poster-placeholder">
-              <ImageOff className="placeholder-icon" />
+              <ImageOff className="placeholder-icon" aria-hidden="true" />
               <span>No poster available</span>
             </div>
           )}
@@ -63,4 +63,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
     </div>
   );
 }
+
+export default memo(MovieCard);
+
 

@@ -25,15 +25,15 @@ export default function RegisterPage() {
         <div className="auth-card">
           <div className="auth-header">
             <div className="auth-icon-wrapper">
-              <UserPlus className="auth-icon" />
+              <UserPlus className="auth-icon" aria-hidden="true" />
             </div>
             <h1 className="auth-title">Create an Account</h1>
             <p className="auth-subtitle">Join Movie Explorer to save your favorite movies</p>
           </div>
 
           {error && (
-            <div className="auth-error-banner" role="alert">
-              <AlertCircle className="auth-error-icon" />
+            <div className="auth-error-banner" role="alert" aria-live="assertive">
+              <AlertCircle className="auth-error-icon" aria-hidden="true" />
               <span>{error}</span>
             </div>
           )}
@@ -44,7 +44,7 @@ export default function RegisterPage() {
                 Email Address
               </label>
               <div className="input-wrapper">
-                <Mail className="input-icon" />
+                <Mail className="input-icon" aria-hidden="true" />
                 <input
                   id="register-email"
                   type="email"
@@ -66,7 +66,7 @@ export default function RegisterPage() {
                 Password
               </label>
               <div className="input-wrapper">
-                <Lock className="input-icon" />
+                <Lock className="input-icon" aria-hidden="true" />
                 <input
                   id="register-password"
                   type="password"
@@ -88,7 +88,7 @@ export default function RegisterPage() {
                 Confirm Password
               </label>
               <div className="input-wrapper">
-                <Lock className="input-icon" />
+                <Lock className="input-icon" aria-hidden="true" />
                 <input
                   id="register-confirm-password"
                   type="password"

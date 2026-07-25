@@ -1,4 +1,4 @@
-import React from 'react';
+import { type FormEvent } from 'react';
 import { Search } from 'lucide-react';
 
 interface SearchBarProps {
@@ -9,7 +9,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ query, onChange, onSubmit, placeholder = 'Search for movies...' }: SearchBarProps) {
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSubmit();
   };
@@ -24,7 +24,7 @@ export default function SearchBar({ query, onChange, onSubmit, placeholder = 'Se
         onChange={(e) => onChange(e.target.value)}
       />
       <button type="submit" className="search-button" aria-label="Search">
-        <Search className="search-icon" />
+        <Search className="search-icon" aria-hidden="true" />
       </button>
     </form>
   );

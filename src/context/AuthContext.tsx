@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useMemo, type ReactNode } from 'react';
 import type { User } from '../models/User';
 import { AuthService } from '../services/AuthService';
 
@@ -22,19 +22,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       await AuthService.logout();
     } catch (err) {
       console.error('Logout error:', err);
     }
-  };
+  }, []);
 
-  return (
-    <AuthContext.Provider value={{ currentUser, loading, logout }}>
-      {children}
-    </AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      currentUser,
+      loading,
+      logout,
+    }),
+    [currentUser, loading, logout]
   );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuthContext(): AuthContextType {

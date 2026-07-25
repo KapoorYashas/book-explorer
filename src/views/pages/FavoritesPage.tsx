@@ -13,7 +13,7 @@ export default function FavoritesPage() {
         <Container>
           <div className="empty-state auth-required-state">
             <div className="empty-icon-wrapper">
-              <LogIn className="empty-icon" />
+              <LogIn className="empty-icon" aria-hidden="true" />
             </div>
             <h2>Sign in to view your favorites</h2>
             <p>You must be signed in to save and manage your favorite movies.</p>
@@ -31,7 +31,7 @@ export default function FavoritesPage() {
       <Container>
         <header className="page-header">
           <div className="favorites-header-title">
-            <Heart className="favorites-header-icon" fill="currentColor" />
+            <Heart className="favorites-header-icon" fill="currentColor" aria-hidden="true" />
             <h1>Your Favorite Movies</h1>
           </div>
           <p className="favorites-subtitle">
@@ -52,13 +52,13 @@ export default function FavoritesPage() {
           {!isLoading && !error && favorites.length === 0 && (
             <div className="empty-state">
               <div className="empty-icon-wrapper">
-                <Heart className="empty-icon" />
+                <Heart className="empty-icon" aria-hidden="true" />
               </div>
               <h2>No favorites added yet</h2>
               <p>Explore movies and click the heart icon to save them here.</p>
               <Link to="/" style={{ marginTop: '1rem' }}>
                 <Button variant="primary">
-                  <Search className="btn-icon" />
+                  <Search className="btn-icon" aria-hidden="true" />
                   Explore Movies
                 </Button>
               </Link>

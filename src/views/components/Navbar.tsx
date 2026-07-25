@@ -19,7 +19,7 @@ export default function Navbar({ isAuthenticated: propsAuth, onLogout: propsLogo
     <nav className="navbar">
       <Container className="navbar-container">
         <Link to="/" className="navbar-logo">
-          <Film className="logo-icon" />
+          <Film className="logo-icon" aria-hidden="true" />
           <span>Movie Explorer</span>
         </Link>
         <div className="navbar-links">
@@ -28,7 +28,7 @@ export default function Navbar({ isAuthenticated: propsAuth, onLogout: propsLogo
               <Link to="/favorites" className="nav-link">Favorites</Link>
               {currentUser?.email && (
                 <span className="navbar-user-email">
-                  <UserIcon className="user-icon" />
+                  <UserIcon className="user-icon" aria-hidden="true" />
                   <span>{currentUser.email}</span>
                 </span>
               )}

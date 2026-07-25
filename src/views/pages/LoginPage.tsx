@@ -24,15 +24,15 @@ export default function LoginPage() {
         <div className="auth-card">
           <div className="auth-header">
             <div className="auth-icon-wrapper">
-              <LogIn className="auth-icon" />
+              <LogIn className="auth-icon" aria-hidden="true" />
             </div>
             <h1 className="auth-title">Welcome Back</h1>
             <p className="auth-subtitle">Sign in to your Movie Explorer account</p>
           </div>
 
           {error && (
-            <div className="auth-error-banner" role="alert">
-              <AlertCircle className="auth-error-icon" />
+            <div className="auth-error-banner" role="alert" aria-live="assertive">
+              <AlertCircle className="auth-error-icon" aria-hidden="true" />
               <span>{error}</span>
             </div>
           )}
@@ -43,7 +43,7 @@ export default function LoginPage() {
                 Email Address
               </label>
               <div className="input-wrapper">
-                <Mail className="input-icon" />
+                <Mail className="input-icon" aria-hidden="true" />
                 <input
                   id="login-email"
                   type="email"
@@ -65,7 +65,7 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="input-wrapper">
-                <Lock className="input-icon" />
+                <Lock className="input-icon" aria-hidden="true" />
                 <input
                   id="login-password"
                   type="password"

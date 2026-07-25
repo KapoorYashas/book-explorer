@@ -20,7 +20,7 @@ export default function MovieDetailsPage() {
       <Container>
         {/* Back navigation */}
         <Link to="/" className="details-back-link">
-          <ArrowLeft className="details-back-icon" />
+          <ArrowLeft className="details-back-icon" aria-hidden="true" />
           Back to search
         </Link>
 
@@ -44,7 +44,7 @@ export default function MovieDetailsPage() {
                 />
               ) : (
                 <div className="details-poster-placeholder">
-                  <ImageOff className="placeholder-icon" />
+                  <ImageOff className="placeholder-icon" aria-hidden="true" />
                   <span>No poster available</span>
                 </div>
               )}
@@ -59,11 +59,10 @@ export default function MovieDetailsPage() {
                   className={`details-fav-btn ${favorited ? 'active' : ''}`}
                   onClick={() => toggleFavorite(movie)}
                 >
-                  <Heart className="details-fav-icon" fill={favorited ? 'currentColor' : 'none'} />
+                  <Heart className="details-fav-icon" fill={favorited ? 'currentColor' : 'none'} aria-hidden="true" />
                   <span>{favorited ? 'Favorited' : 'Add to Favorites'}</span>
                 </Button>
               </div>
-
 
               {/* Badges row */}
               <div className="details-badges">
@@ -71,13 +70,13 @@ export default function MovieDetailsPage() {
                 {movie.type && <span className="detail-badge detail-badge--type">{movie.type}</span>}
                 {movie.runtime && (
                   <span className="detail-badge">
-                    <Clock className="badge-icon" />
+                    <Clock className="badge-icon" aria-hidden="true" />
                     {movie.runtime}
                   </span>
                 )}
                 {movie.imdbRating && (
                   <span className="detail-badge detail-badge--rating">
-                    <Star className="badge-icon" />
+                    <Star className="badge-icon" aria-hidden="true" />
                     {movie.imdbRating} / 10
                   </span>
                 )}
@@ -103,7 +102,7 @@ export default function MovieDetailsPage() {
               <div className="details-meta">
                 {movie.director && (
                   <div className="details-meta-row">
-                    <Film className="meta-icon" />
+                    <Film className="meta-icon" aria-hidden="true" />
                     <div>
                       <span className="meta-label">Director</span>
                       <span className="meta-value">{movie.director}</span>
@@ -112,7 +111,7 @@ export default function MovieDetailsPage() {
                 )}
                 {movie.actors && (
                   <div className="details-meta-row">
-                    <Users className="meta-icon" />
+                    <Users className="meta-icon" aria-hidden="true" />
                     <div>
                       <span className="meta-label">Cast</span>
                       <span className="meta-value">{movie.actors}</span>

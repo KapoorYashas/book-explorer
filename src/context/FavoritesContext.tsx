@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useMemo, type ReactNode } from 'react';
 import { useAuthContext } from './AuthContext';
 import { FavoriteService } from '../services/FavoriteService';
 import type { Movie } from '../models/Movie';
@@ -48,56 +48,61 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, [currentUser]);
 
-  const isFavorite = (movieId: string): boolean => {
-    return favoriteIds.has(movieId);
-  };
-
-  const toggleFavorite = async (movie: Movie): Promise<boolean> => {
-    if (!currentUser) {
-      return false;
-    }
-
-    const alreadyFav = isFavorite(movie.id);
-
-    // Optimistically update local favorite status for instantaneous UI response
-    const nextIds = new Set(favoriteIds);
-    if (alreadyFav) {
-      nextIds.delete(movie.id);
-    } else {
-      nextIds.add(movie.id);
-    }
-    setFavoriteIds(nextIds);
-
-    try {
-      if (alreadyFav) {
-        await FavoriteService.removeFavorite(currentUser.uid, movie.id);
-      } else {
-        await FavoriteService.addFavorite(currentUser.uid, movie);
-      }
-      return true;
-    } catch (err) {
-      console.error('Error toggling favorite:', err);
-      // Revert optimistic update on failure
-      setFavoriteIds(favoriteIds);
-      setError('Failed to update favorite status. Please try again.');
-      return true;
-    }
-  };
-
-  return (
-    <FavoritesContext.Provider
-      value={{
-        favorites,
-        favoriteIds,
-        isLoading,
-        error,
-        isFavorite,
-        toggleFavorite,
-      }}
-    >
-      {children}
-    </FavoritesContext.Provider>
+  const isFavorite = useCallback(
+    (movieId: string): boolean => {
+      return favoriteIds.has(movieId);
+    },
+    [favoriteIds]
   );
+
+  const toggleFavorite = useCallback(
+    async (movie: Movie): Promise<boolean> => {
+      if (!currentUser) {
+        return false;
+      }
+
+      const alreadyFav = favoriteIds.has(movie.id);
+
+      // Optimistically update local favorite status for instantaneous UI response
+      const nextIds = new Set(favoriteIds);
+      if (alreadyFav) {
+        nextIds.delete(movie.id);
+      } else {
+        nextIds.add(movie.id);
+      }
+      setFavoriteIds(nextIds);
+
+      try {
+        if (alreadyFav) {
+          await FavoriteService.removeFavorite(currentUser.uid, movie.id);
+        } else {
+          await FavoriteService.addFavorite(currentUser.uid, movie);
+        }
+        return true;
+      } catch (err) {
+        console.error('Error toggling favorite:', err);
+        // Revert optimistic update on failure
+        setFavoriteIds(favoriteIds);
+        setError('Failed to update favorite status. Please try again.');
+        return true;
+      }
+    },
+    [currentUser, favoriteIds]
+  );
+
+  const value = useMemo(
+    () => ({
+      favorites,
+      favoriteIds,
+      isLoading,
+      error,
+      isFavorite,
+      toggleFavorite,
+    }),
+    [favorites, favoriteIds, isLoading, error, isFavorite, toggleFavorite]
+  );
+
+  return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;
 }
 
 export function useFavoritesContext(): FavoritesContextType {
