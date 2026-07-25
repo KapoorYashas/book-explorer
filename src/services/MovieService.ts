@@ -117,10 +117,20 @@ export const MovieService = {
   },
 
   /**
-   * Retrieves a list of featured movies (using a generic search).
+   * Retrieves a list of featured movies by randomly choosing a genre/keyword query.
    */
   async getFeaturedMovies(): Promise<ServiceResponse<Movie[]>> {
-    // OMDb doesn't have a "featured" endpoint, so we search for a popular keyword or year.
-    return this.searchMovies("Batman");
-  }
+    const featuredKeywords = [
+      'fiction',
+      'action',
+      'comedy',
+      'adventure',
+      'thriller',
+      'animation',
+      'drama',
+      'fantasy',
+    ];
+    const randomKeyword = featuredKeywords[Math.floor(Math.random() * featuredKeywords.length)];
+    return this.searchMovies(randomKeyword);
+  },
 };
