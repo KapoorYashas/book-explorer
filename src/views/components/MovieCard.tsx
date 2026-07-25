@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { ImageOff } from 'lucide-react';
+import { ImageOff, Heart } from 'lucide-react';
 import type { Movie } from '../../models';
+import { useFavorites } from '../../viewmodels';
 
 interface MovieCardProps {
   movie: Movie;
@@ -11,13 +12,31 @@ export default function MovieCard({ movie }: MovieCardProps) {
   // Track whether the remote poster image failed to load.
   // Starts false; flips to true on the img onError event.
   const [posterError, setPosterError] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
+  const favorited = isFavorite(movie.id);
   const showImage = movie.poster && !posterError;
+
+  const handleFavoriteClick = (e: MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(movie);
+  };
 
   return (
     <div className="movie-card">
       <Link to={`/movie/${movie.id}`} className="movie-card-link">
         <div className="movie-poster-wrapper">
+          <button
+            type="button"
+            className={`favorite-card-btn ${favorited ? 'active' : ''}`}
+            onClick={handleFavoriteClick}
+            aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+            title={favorited ? 'Remove from favorites' : 'Add to favorites'}
+          >
+            <Heart className="favorite-card-icon" fill={favorited ? 'currentColor' : 'none'} />
+          </button>
+
           {showImage ? (
             <img
               src={movie.poster!}
@@ -44,3 +63,4 @@ export default function MovieCard({ movie }: MovieCardProps) {
     </div>
   );
 }
+

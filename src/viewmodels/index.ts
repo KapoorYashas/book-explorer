@@ -2,3 +2,5 @@
 export * from './useAuth';
 export * from './useMovies';
 export * from './useMovieDetails';
+export * from './useFavorites';
+

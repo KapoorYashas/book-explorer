@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useMovies } from '../../viewmodels';
 import { SearchBar, Container, Loading, Error, MovieCard } from '../components';
 

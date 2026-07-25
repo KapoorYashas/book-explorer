@@ -1,15 +1,20 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import { Film } from 'lucide-react';
+import { Film, User as UserIcon } from 'lucide-react';
 import Button from './Button';
 import Container from './Container';
+import { useAuthContext } from '../../context/AuthContext';
 
 interface NavbarProps {
-  isAuthenticated: boolean;
-  onLogout: () => void;
+  isAuthenticated?: boolean;
+  onLogout?: () => void;
 }
 
-export default function Navbar({ isAuthenticated, onLogout }: NavbarProps) {
+export default function Navbar({ isAuthenticated: propsAuth, onLogout: propsLogout }: NavbarProps) {
+  const { currentUser, logout } = useAuthContext();
+
+  const isAuth = propsAuth ?? (currentUser !== null);
+  const handleLogout = propsLogout ?? logout;
+
   return (
     <nav className="navbar">
       <Container className="navbar-container">
@@ -18,10 +23,16 @@ export default function Navbar({ isAuthenticated, onLogout }: NavbarProps) {
           <span>Movie Explorer</span>
         </Link>
         <div className="navbar-links">
-          {isAuthenticated ? (
+          {isAuth ? (
             <>
               <Link to="/favorites" className="nav-link">Favorites</Link>
-              <Button variant="secondary" onClick={onLogout}>Logout</Button>
+              {currentUser?.email && (
+                <span className="navbar-user-email">
+                  <UserIcon className="user-icon" />
+                  <span>{currentUser.email}</span>
+                </span>
+              )}
+              <Button variant="secondary" onClick={handleLogout}>Logout</Button>
             </>
           ) : (
             <>
@@ -34,3 +45,4 @@ export default function Navbar({ isAuthenticated, onLogout }: NavbarProps) {
     </nav>
   );
 }
+

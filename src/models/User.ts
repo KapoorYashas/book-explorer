@@ -1,6 +1,10 @@
 /**
  * User.ts
- * This folder (models) contains TypeScript interfaces and types.
- * Models represent the domain entities of the application (no logic here).
+ * Domain model representing an authenticated user.
  */
-export interface User {}
+export interface User {
+  uid: string;
+  email: string | null;
+  displayName?: string | null;
+}
+

@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Star, Clock, Film, Users, ImageOff } from 'lucide-react';
-import { useMovieDetails } from '../../viewmodels';
-import { Loading, Error, Container } from '../components';
+import { ArrowLeft, Star, Clock, Film, Users, ImageOff, Heart } from 'lucide-react';
+import { useMovieDetails, useFavorites } from '../../viewmodels';
+import { Loading, Error, Container, Button } from '../components';
 
 export default function MovieDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const { movie, isLoading, error } = useMovieDetails(id);
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   // Poster fallback — same pattern as MovieCard
   const [posterError, setPosterError] = useState(false);
   const showImage = movie?.poster && !posterError;
+  const favorited = movie ? isFavorite(movie.id) : false;
+
 
   return (
     <div className="page details-page">
@@ -49,7 +52,18 @@ export default function MovieDetailsPage() {
 
             {/* Info column */}
             <div className="details-info">
-              <h1 className="details-title">{movie.title}</h1>
+              <div className="details-header-top">
+                <h1 className="details-title">{movie.title}</h1>
+                <Button
+                  variant={favorited ? 'secondary' : 'primary'}
+                  className={`details-fav-btn ${favorited ? 'active' : ''}`}
+                  onClick={() => toggleFavorite(movie)}
+                >
+                  <Heart className="details-fav-icon" fill={favorited ? 'currentColor' : 'none'} />
+                  <span>{favorited ? 'Favorited' : 'Add to Favorites'}</span>
+                </Button>
+              </div>
+
 
               {/* Badges row */}
               <div className="details-badges">

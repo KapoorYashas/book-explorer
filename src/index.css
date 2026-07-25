@@ -240,6 +240,7 @@ img { display: block; max-width: 100%; }
 
 /* Poster image in a fixed 2:3 aspect ratio box */
 .movie-poster-wrapper {
+  position: relative;
   aspect-ratio: 2 / 3;
   overflow: hidden;
   background-color: var(--color-surface-2);
@@ -562,3 +563,306 @@ img { display: block; max-width: 100%; }
   color: var(--color-text);
   line-height: 1.5;
 }
+
+/* ================================================================
+   AUTHENTICATION & USER BADGE STYLES
+   ================================================================ */
+
+.navbar-user-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-2);
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.navbar-user-email .user-icon {
+  width: 14px;
+  height: 14px;
+  color: var(--color-primary);
+}
+
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 0;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 2.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.auth-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(157, 178, 191, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.auth-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+}
+
+.auth-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.auth-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.auth-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background-color: rgba(224, 92, 108, 0.12);
+  border: 1px solid rgba(224, 92, 108, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-bottom: 1.25rem;
+}
+
+.auth-error-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  width: 18px;
+  height: 18px;
+  color: var(--color-text-faint);
+  pointer-events: none;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.7rem 0.75rem 0.7rem 2.5rem;
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(157, 178, 191, 0.25);
+}
+
+.form-input::placeholder {
+  color: var(--color-text-faint);
+}
+
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.auth-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.auth-link {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.auth-link:hover {
+  color: var(--color-text);
+}
+
+/* ================================================================
+   FAVORITES STYLES
+   ================================================================ */
+
+.favorite-card-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(15, 17, 23, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: transform var(--transition), color var(--transition), background-color var(--transition), border-color var(--transition);
+}
+
+.favorite-card-btn:hover {
+  transform: scale(1.12);
+  color: var(--color-danger);
+  background-color: rgba(15, 17, 23, 0.9);
+  border-color: rgba(224, 92, 108, 0.4);
+}
+
+.favorite-card-btn.active {
+  color: var(--color-danger);
+  border-color: rgba(224, 92, 108, 0.5);
+  background-color: rgba(15, 17, 23, 0.85);
+}
+
+.favorite-card-icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.favorite-card-btn:active .favorite-card-icon {
+  transform: scale(0.85);
+}
+
+/* Movie Details Header Action */
+.details-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.details-fav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: all var(--transition);
+}
+
+.details-fav-btn.active {
+  background-color: rgba(224, 92, 108, 0.15);
+  border: 1px solid rgba(224, 92, 108, 0.4);
+  color: var(--color-danger);
+}
+
+.details-fav-btn.active:hover {
+  background-color: rgba(224, 92, 108, 0.25);
+}
+
+.details-fav-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Favorites Page */
+.favorites-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.favorites-header-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-danger);
+}
+
+.favorites-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.empty-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(157, 178, 191, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.empty-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-text-faint);
+}
+
+.btn-icon {
+  width: 16px;
+  height: 16px;
+}
+
+
