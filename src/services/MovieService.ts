@@ -1,5 +1,5 @@
-import { Movie, OMDbSearchResponse, OMDbMovieResponse } from '../models';
-
+import type { Movie } from '../models';
+import type { OMDbSearchResponse, OMDbMovieResponse } from '../models/OMDb';
 const API_BASE_URL = 'https://www.omdbapi.com/';
 const DEFAULT_TIMEOUT_MS = 10000;
 

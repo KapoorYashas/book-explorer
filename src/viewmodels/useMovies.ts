@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { MovieService } from '../services/MovieService';
-import { Movie } from '../models';
+import type { Movie } from '../models';
 
 /**
  * useMovies.ts

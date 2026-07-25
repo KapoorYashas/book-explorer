@@ -10,7 +10,6 @@ const MovieDetailsPage = lazy(() => import('./views/pages/MovieDetailsPage'));
 const NotFoundPage = lazy(() => import('./views/pages/NotFoundPage'));
 
 function App() {
-  console.log('API KEY:', import.meta.env.VITE_OMDB_API_KEY);
 
   return (
     <Router>
@@ -29,4 +28,3 @@ function App() {
 }
 
 export default App;
-console.log('API KEY:', import.meta.env.VITE_OMDB_API_KEY);
