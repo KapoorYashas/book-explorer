@@ -1,6 +1,7 @@
 import type { Movie } from '../models';
 import type { OMDbSearchResponse, OMDbMovieResponse } from '../models/OMDb';
-const API_BASE_URL = 'https://www.omdbapi.com/';
+import { OMDB_API_BASE_URL } from '../config/constants';
+
 const DEFAULT_TIMEOUT_MS = 10000;
 
 export interface ServiceResponse<T> {
@@ -47,7 +48,7 @@ export const MovieService = {
 
     try {
       const apiKey = getApiKey();
-      const url = `${API_BASE_URL}?apikey=${apiKey}&s=${encodeURIComponent(title)}&page=${page}&type=movie`;
+      const url = `${OMDB_API_BASE_URL}?apikey=${apiKey}&s=${encodeURIComponent(title)}&page=${page}&type=movie`;
       const response = await fetchWithTimeout(url);
 
       if (!response.ok) {
@@ -82,7 +83,7 @@ export const MovieService = {
   async getMovieById(imdbID: string): Promise<ServiceResponse<Movie>> {
     try {
       const apiKey = getApiKey();
-      const url = `${API_BASE_URL}?apikey=${apiKey}&i=${encodeURIComponent(imdbID)}&plot=full`;
+      const url = `${OMDB_API_BASE_URL}?apikey=${apiKey}&i=${encodeURIComponent(imdbID)}&plot=full`;
       const response = await fetchWithTimeout(url);
 
       if (!response.ok) {

@@ -4,18 +4,17 @@ import type { Movie } from '../models';
 
 /**
  * useMovies.ts
- * ViewModel managing search state, movie details, and interactions.
- * It encapsulates presentation logic and acts as the bridge between UI and Services.
+ * ViewModel managing movie search state, query inputs, and featured list loading.
+ * Acts as the presentation logic bridge between Search views and MovieService.
  */
 export function useMovies() {
-  // State
+  // Movie search result state
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   
-  // Search State
+  // Search input query state
   const [searchQuery, setSearchQuery] = useState<string>('');
   
-  // Async State
+  // Async status state
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,44 +64,18 @@ export function useMovies() {
   }, []);
 
   /**
-   * Fetch detailed information for a single movie
-   */
-  const getMovieById = useCallback(async (id: string) => {
-    setIsLoading(true);
-    setError(null);
-    setSelectedMovie(null); // Clear previous selection while loading
-
-    const { data, error: apiError } = await MovieService.getMovieById(id);
-
-    if (apiError) {
-      setError(apiError);
-    } else {
-      setSelectedMovie(data);
-    }
-
-    setIsLoading(false);
-  }, []);
-
-  /**
    * Utility to manually clear errors from the UI
    */
   const clearError = useCallback(() => setError(null), []);
 
   return {
-    // State Exports
     movies,
-    selectedMovie,
     searchQuery,
     isLoading,
     error,
-    
-    // State Setters
     setSearchQuery,
     clearError,
-
-    // Action Exports
     searchMovies,
     getFeaturedMovies,
-    getMovieById
   };
 }

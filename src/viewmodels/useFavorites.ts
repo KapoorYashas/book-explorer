@@ -1,23 +1,21 @@
 /**
  * useFavorites.ts
  * ViewModel hook providing favorite state and actions.
- * Redirects unauthenticated users to /login when attempting to favorite a movie.
+ * Decoupled from router side-effects; returns a boolean indicating success or auth requirement.
  */
-import { useNavigate } from 'react-router-dom';
 import { useFavoritesContext } from '../context/FavoritesContext';
 import type { Movie } from '../models/Movie';
 
 export function useFavorites() {
   const { favorites, favoriteIds, isLoading, error, isFavorite, toggleFavorite } =
     useFavoritesContext();
-  const navigate = useNavigate();
 
-  const handleToggleFavorite = async (movie: Movie) => {
-    const success = await toggleFavorite(movie);
-    if (!success) {
-      // User is not logged in -> redirect to login page
-      navigate('/login');
-    }
+  /**
+   * Toggles favorite status for a movie.
+   * Returns true if operation succeeded, false if user is unauthenticated (requires login).
+   */
+  const handleToggle = async (movie: Movie): Promise<boolean> => {
+    return await toggleFavorite(movie);
   };
 
   return {
@@ -26,6 +24,6 @@ export function useFavorites() {
     isLoading,
     error,
     isFavorite,
-    toggleFavorite: handleToggleFavorite,
+    toggleFavorite: handleToggle,
   };
 }

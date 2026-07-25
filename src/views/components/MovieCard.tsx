@@ -1,5 +1,5 @@
 import { useState, memo, type MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ImageOff, Heart } from 'lucide-react';
 import type { Movie } from '../../models';
 import { useFavorites } from '../../viewmodels';
@@ -13,14 +13,18 @@ function MovieCard({ movie }: MovieCardProps) {
   // Starts false; flips to true on the img onError event.
   const [posterError, setPosterError] = useState(false);
   const { isFavorite, toggleFavorite } = useFavorites();
+  const navigate = useNavigate();
 
   const favorited = isFavorite(movie.id);
   const showImage = movie.poster && !posterError;
 
-  const handleFavoriteClick = (e: MouseEvent) => {
+  const handleFavoriteClick = async (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    toggleFavorite(movie);
+    const success = await toggleFavorite(movie);
+    if (!success) {
+      navigate('/login');
+    }
   };
 
   return (
