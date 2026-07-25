@@ -4,8 +4,7 @@ A modern, responsive React + TypeScript web application for discovering movies, 
 
 Built adhering to **MVVM (Model-View-ViewModel)** architectural principles, accessible design standards (WCAG AAA contrast), and responsive styling.
 
-**Live Demo**: _[link coming after deployment]_
-
+**Live Demo**: [https://book-explorer-tau.vercel.app](https://book-explorer-tau.vercel.app)
 ---
 
 ## 🚀 Tech Stack
