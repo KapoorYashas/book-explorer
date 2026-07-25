@@ -370,3 +370,195 @@ img { display: block; max-width: 100%; }
   font-size: 0.95rem;
   text-align: center;
 }
+
+/* ================================================================
+   MOVIE DETAILS PAGE
+   ================================================================ */
+
+/* Back link */
+.details-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: color var(--transition);
+}
+.details-back-link:hover { color: var(--color-text); }
+.details-back-icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Two-column layout: poster | info */
+.details-layout {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;       /* single col on mobile */
+  margin-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .details-layout {
+    grid-template-columns: 240px 1fr;   /* fixed poster, fluid info */
+    align-items: start;
+  }
+}
+
+@media (min-width: 900px) {
+  .details-layout { grid-template-columns: 300px 1fr; }
+}
+
+/* Poster */
+.details-poster-wrapper {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 2 / 3;
+  background-color: var(--color-surface-2);
+}
+
+.details-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.details-poster-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  color: var(--color-text-faint);
+  background-color: var(--color-surface-2);
+}
+.details-poster-placeholder .placeholder-icon { width: 40px; height: 40px; opacity: 0.4; }
+.details-poster-placeholder span {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* Info column */
+.details-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.details-title {
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+/* Badges row — year, type, runtime, rating */
+.details-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.detail-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+.detail-badge--type {
+  color: var(--color-primary);
+  background-color: rgba(157, 178, 191, 0.12);
+  border-color: rgba(157, 178, 191, 0.25);
+  text-transform: capitalize;
+}
+
+.detail-badge--rating {
+  color: #f5c518;     /* IMDb gold — intentionally not a theme variable */
+  background-color: rgba(245, 197, 24, 0.1);
+  border-color: rgba(245, 197, 24, 0.2);
+}
+
+.badge-icon { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* Genre pills */
+.details-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.genre-pill {
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* Plot text */
+.details-section { border-top: 1px solid var(--color-border); padding-top: 1.25rem; }
+
+.details-plot {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+}
+
+/* Director / Cast rows */
+.details-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.25rem;
+}
+
+.details-meta-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.meta-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  color: var(--color-primary);
+}
+
+.details-meta-row > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.meta-value {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
