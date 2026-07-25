@@ -2,6 +2,6 @@
 export { default as LoginPage } from './LoginPage';
 export { default as RegisterPage } from './RegisterPage';
 export { default as SearchPage } from './SearchPage';
-export { default as BookDetailsPage } from './BookDetailsPage';
+export { default as MovieDetailsPage } from './MovieDetailsPage';
 export { default as FavoritesPage } from './FavoritesPage';
 export { default as NotFoundPage } from './NotFoundPage';
